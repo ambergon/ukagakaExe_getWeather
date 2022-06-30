@@ -1,26 +1,32 @@
 package main
 
 import (
+    "flag"
+    "os"
     "fmt"
     "io"
     "net/http"
     "encoding/json"
 )
 
-//input     :都道府県コード Int 2桁。
-//output    :テキスト。表示方法を考える。配列として渡してパースしてもよい。
-
-
-
-
 func main() {
-    url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/280000.json" 
-    //url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/130000.json" 
+    flag.Parse()
+    args := flag.Args()
+
+    var num string
+    if len(args) == 1 {
+        num = args[0]
+    }else{
+        os.Exit(0)
+        //num = "13"
+    }
+    url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/" + num + "0000.json" 
 
     resp, err := http.Get( url )
     if err != nil {
-        panic(err)
+        os.Exit(0)
     }
+
     defer resp.Body.Close()
     body, _ := io.ReadAll( resp.Body )
 
@@ -28,9 +34,9 @@ func main() {
     var X strc
     json.Unmarshal(body, &X)
 
-    fmt.Println( X.PublishingOffice)
-    fmt.Println( X.ReportDatetime)
-    fmt.Println( X.TargetArea)
+    //fmt.Println( X.PublishingOffice)
+    //fmt.Println( X.ReportDatetime)
+    //fmt.Println( X.TargetArea)
     fmt.Println( X.Text)
 }
 type strc struct {
@@ -45,3 +51,9 @@ type strc struct {
     // 本文
     Text                string `json:"text"`
 }
+
+
+
+
+
+
