@@ -20,7 +20,9 @@ func main() {
         os.Exit(0)
         //num = "13"
     }
-    url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/" + num + "0000.json" 
+
+    //4桁
+    url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/" + num + "00.json" 
 
     resp, err := http.Get( url )
     if err != nil {
