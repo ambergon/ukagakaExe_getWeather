@@ -7,6 +7,7 @@ import (
     "io"
     "net/http"
     "encoding/json"
+    "strings"
 )
 
 func main() {
@@ -37,6 +38,9 @@ func main() {
     //fmt.Println( X.PublishingOffice)
     //fmt.Println( X.ReportDatetime)
     //fmt.Println( X.TargetArea)
+    //伺かで扱いやすくするために改行コードを取り除く
+    X.Text = strings.ReplaceAll( X.Text , "\n" , "" )
+
     fmt.Println( X.Text)
 }
 type strc struct {
